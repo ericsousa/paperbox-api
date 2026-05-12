@@ -48,16 +48,35 @@ function getProductById(req: Request, res: Response): void {
     }
 }
 
+function generateProductId(): number {
+    if (produtos.length === 0) {
+        return 1;
+    }
+    const ids = produtos.map(p => p.id); // Extracts the IDs of existing products
+    const maxId = Math.max(...ids); // Find the maximum ID
+    return maxId + 1; // Return the next ID
+}
+
 function newProduct(req: Request, res: Response): void {
     try {
         let data: any = req.body;
+
+        // Validate the provided ID is a positive number if it exists
+        if (data.id !== undefined && data.id <= 0) {
+            throw new Error('ID deve ser um número positivo ou deixado em branco para auto-gerar.');
+        }
+
+        // Check if the provided ID already exists in the products array
+        if (data.id !== undefined && produtos.some(p => p.id === data.id)) {
+            throw new Error('ID já existe. Por favor, forneça um ID único ou deixe em branco para auto-gerar.');
+        }
 
         if (!data.nome || !data.preco || !data.fabricante) {
             throw new Error('Produto requer nome, preco e fabricante');
         }
 
         const produto = new Produto(
-            data.id,
+            data.id || generateProductId(),
             data.nome,
             data.preco,
             data.fabricante
