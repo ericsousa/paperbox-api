@@ -8,8 +8,9 @@ const produtos: Produto[] = [];
 app.use(express.json());
 
 app.get('/api/', getApiInfo);
-app.get('/api/produtos', listarProdutos);
-app.post('/api/produtos', novoProduto);
+app.get('/api/products', listProducts);
+app.get('/api/products/:id', getProductById);
+app.post('/api/products', newProduct);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -22,11 +23,27 @@ function getApiInfo(req: Request, res: Response): void {
     });
 }
 
-function listarProdutos(req: Request, res: Response): void {
+function listProducts(req: Request, res: Response): void {
     res.status(200).json(produtos);
 }
 
-function novoProduto(req: Request, res: Response): void {
+function getProductById(req: Request, res: Response): void {
+    try {
+
+        const id = parseInt(String(req.params.id));
+
+        const produto = produtos.find(p => p.id === id);
+        if (!produto) {
+            throw new Error('Produto não encontrado');
+        }
+        res.status(200).json(produto);
+
+    } catch (e: unknown) {
+        res.status(404).json({ error: (e as Error).message });
+    }
+}
+
+function newProduct(req: Request, res: Response): void {
     try {
         let data: any = req.body;
 
