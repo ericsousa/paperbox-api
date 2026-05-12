@@ -15,6 +15,9 @@ app.put('/api/products/:id', updateProduct);
 app.delete('/api/products/:id', deleteProduct);
 
 app.listen(port, () => {
+    if ( process.env.SEED === 'true' ) {
+        seedProducts();
+    }
     console.log(`Server is running on port ${port}`);
 });
 
@@ -90,7 +93,7 @@ function updateProduct(req: Request, res: Response): void {
         produtos[produtoIndex] = produto;
         res.status(200).json(produto);
     } catch (e: unknown) {
-        res.status(400).json({ error: (e as Error).message });
+        res.status(404).json({ error: (e as Error).message });
     }
 }
 
@@ -104,9 +107,84 @@ function deleteProduct(req: Request, res: Response): void {
         }
 
         produtos.splice(produtoIndex, 1);
-        
+
         res.status(200).json({ message: 'Produto deletado com sucesso' });
     } catch (e: unknown) {
-        res.status(400).json({ error: (e as Error).message });
+        res.status(404).json({ error: (e as Error).message });
     }
+}
+
+function seedProducts(): void {
+    produtos.push(
+        new Produto(1, 'Caderno universitario 10 materias', 24.90, {
+            nome: 'Tilibra',
+            endereco: {
+                cidade: 'Bauru',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(2, 'Caneta esferografica azul', 2.50, {
+            nome: 'BIC',
+            endereco: {
+                cidade: 'Manaus',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(3, 'Lapis preto HB', 1.50, {
+            nome: 'Faber-Castell',
+            endereco: {
+                cidade: 'Sao Carlos',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(4, 'Borracha branca', 2.25, {
+            nome: 'Mercur',
+            endereco: {
+                cidade: 'Santa Cruz do Sul',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(5, 'Apontador com deposito', 4.90, {
+            nome: 'Faber-Castell',
+            endereco: {
+                cidade: 'Sao Carlos',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(6, 'Marca-texto amarelo', 6.50, {
+            nome: 'Stabilo',
+            endereco: {
+                cidade: 'Heroldsberg',
+                pais: 'Alemanha'
+            }
+        }),
+        new Produto(7, 'Corretivo liquido', 5.90, {
+            nome: 'BIC',
+            endereco: {
+                cidade: 'Manaus',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(8, 'Cola branca escolar', 4.75, {
+            nome: 'Pritt',
+            endereco: {
+                cidade: 'Sao Paulo',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(9, 'Tesoura escolar sem ponta', 8.90, {
+            nome: 'Tris',
+            endereco: {
+                cidade: 'Dois Irmaos',
+                pais: 'Brasil'
+            }
+        }),
+        new Produto(10, 'Papel sulfite A4 500 folhas', 32.90, {
+            nome: 'Chamex',
+            endereco: {
+                cidade: 'Mogi Guacu',
+                pais: 'Brasil'
+            }
+        })
+    );
 }

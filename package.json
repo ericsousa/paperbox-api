@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/app.js",
     "build": "npx tsc",
-    "dev": "ts-node src/app.ts"
+    "dev": "ts-node src/app.ts",
+    "dev:seed": "cross-env SEED=true ts-node src/app.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,5 +20,8 @@
     "express": "^5.2.1",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "cross-env": "^10.1.0"
   }
 }
