@@ -12,6 +12,7 @@ app.get('/api/products', listProducts);
 app.get('/api/products/:id', getProductById);
 app.post('/api/products', newProduct);
 app.put('/api/products/:id', updateProduct);
+app.delete('/api/products/:id', deleteProduct);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
@@ -88,6 +89,23 @@ function updateProduct(req: Request, res: Response): void {
 
         produtos[produtoIndex] = produto;
         res.status(200).json(produto);
+    } catch (e: unknown) {
+        res.status(400).json({ error: (e as Error).message });
+    }
+}
+
+function deleteProduct(req: Request, res: Response): void {
+    try {
+        const id = parseInt(String(req.params.id));
+        const produtoIndex = produtos.findIndex(p => p.id === id);
+
+        if (produtoIndex === -1) {
+            throw new Error('Produto não encontrado');
+        }
+
+        produtos.splice(produtoIndex, 1);
+        
+        res.status(200).json({ message: 'Produto deletado com sucesso' });
     } catch (e: unknown) {
         res.status(400).json({ error: (e as Error).message });
     }
