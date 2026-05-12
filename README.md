@@ -55,6 +55,8 @@ Install dependencies:
 npm install
 ```
 
+### Development
+
 Start the API:
 
 ```bash
@@ -65,6 +67,20 @@ Start the API with sample products:
 
 ```bash
 npm run dev:seed
+```
+
+### Production
+
+Build the project:
+
+```bash
+npm run build
+```
+
+Start the compiled API:
+
+```bash
+npm start
 ```
 
 The server runs at:
