@@ -1,31 +1,29 @@
-# Paperbox API
+# 📦 Paperbox API
 
-![Node.js](https://img.shields.io/badge/Node.js-API-339933?style=for-the-badge&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express.js-REST-000000?style=for-the-badge&logo=express&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+A simple and functional RESTful API developed in **TypeScript** with **Express.js** for managing stationery products in memory.
 
-Paperbox API is a RESTful API for managing stationery products in memory. It was built with Express.js and TypeScript as part of a Web Development assignment focused on CRUD operations, HTTP methods, JSON responses, error handling, and nested object manipulation.
+This project was created as part of a Web Development assignment focused on CRUD operations, HTTP methods, JSON responses, TypeScript typing, error handling, and nested objects.
 
-## Features
+## 🚀 Features
 
-- RESTful CRUD routes for stationery products
-- In-memory data storage using a TypeScript array
-- Nested manufacturer and address structure
-- JSON request and response format
-- Basic error handling with HTTP status codes
-- Optional seed mode with sample stationery products
+- ✅ Complete CRUD for stationery products.
+- ✅ Product listing and search by ID.
+- ✅ Product creation with optional automatic ID generation.
+- ✅ Product update and deletion.
+- ✅ In-memory data storage using an array.
+- ✅ Nested manufacturer and address structure.
+- ✅ Validation for duplicated IDs, invalid prices, manufacturer data, city, and country.
+- ✅ Optional seed mode with 10 sample stationery products.
 
-## Tech Stack
+## 🛠️ Technologies Used
 
-- Node.js
-- Express.js
-- TypeScript
-- ts-node
-- cross-env
+- **TypeScript**: Main language with static typing.
+- **Node.js**: JavaScript runtime environment.
+- **Express.js**: Web framework used to build the REST API.
+- **ts-node**: Runs TypeScript files during development.
+- **cross-env**: Handles environment variables across operating systems.
 
-## Product Model
-
-Each product follows this structure:
+## 📚 Product Structure
 
 ```json
 {
@@ -42,7 +40,7 @@ Each product follows this structure:
 }
 ```
 
-## Getting Started
+## ▶️ How to Run
 
 Clone the repository:
 
@@ -57,53 +55,36 @@ Install dependencies:
 npm install
 ```
 
-Run the API in development mode:
+Start the API:
 
 ```bash
 npm run dev
 ```
 
-Run the API with sample products:
+Start the API with sample products:
 
 ```bash
 npm run dev:seed
 ```
 
-The server will run at:
+The server runs at:
 
 ```txt
 http://localhost:3000
 ```
 
-## Scripts
-
-| Script | Description |
-| --- | --- |
-| `npm run dev` | Starts the API with `ts-node` |
-| `npm run dev:seed` | Starts the API with sample in-memory products |
-| `npm run build` | Compiles TypeScript into JavaScript |
-| `npm start` | Runs the compiled app from `dist/app.js` |
-
-## API Overview
-
-Base URL:
-
-```txt
-http://localhost:3000/api
-```
+## 🔗 API Endpoints
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| `GET` | `/api/` | Returns API information |
-| `GET` | `/api/products` | Lists all products |
-| `GET` | `/api/products/:id` | Finds a product by ID |
-| `POST` | `/api/products` | Creates a new product |
-| `PUT` | `/api/products/:id` | Updates an existing product |
-| `DELETE` | `/api/products/:id` | Deletes a product |
+| `GET` | `/api/` | API information |
+| `GET` | `/api/products` | List all products |
+| `GET` | `/api/products/:id` | Find a product by ID |
+| `POST` | `/api/products` | Create a new product |
+| `PUT` | `/api/products/:id` | Update a product |
+| `DELETE` | `/api/products/:id` | Delete a product |
 
-## Example Requests
-
-### Create Product
+## 🧪 Example Request
 
 ```http
 POST /api/products
@@ -112,7 +93,6 @@ Content-Type: application/json
 
 ```json
 {
-  "id": 11,
   "nome": "Caneta gel preta",
   "preco": 7.9,
   "fabricante": {
@@ -125,79 +105,9 @@ Content-Type: application/json
 }
 ```
 
-### List Products
+## 📌 Notes
 
-```http
-GET /api/products
-```
-
-### Get Product By ID
-
-```http
-GET /api/products/1
-```
-
-### Update Product
-
-```http
-PUT /api/products/1
-Content-Type: application/json
-```
-
-```json
-{
-  "nome": "Caderno universitario capa dura",
-  "preco": 29.9,
-  "fabricante": {
-    "nome": "Tilibra",
-    "endereco": {
-      "cidade": "Bauru",
-      "pais": "Brasil"
-    }
-  }
-}
-```
-
-### Delete Product
-
-```http
-DELETE /api/products/1
-```
-
-## HTTP Status Codes
-
-| Status | Meaning |
-| --- | --- |
-| `200` | Successful request |
-| `201` | Product created successfully |
-| `400` | Invalid request data |
-| `404` | Product not found |
-| `500` | Internal server error |
-
-## In-Memory Storage
-
-This project does not use a database. Products are stored in memory using an array, so all data is reset whenever the server restarts.
-
-To start the API with 10 sample products, use:
-
-```bash
-npm run dev:seed
-```
-
-## Assignment Context
-
-This project was created for a Web Development course activity about building REST APIs with Express.js and TypeScript.
-
-The main goals are:
-
-- Implement a complete CRUD API
-- Use proper HTTP methods
-- Return JSON responses
-- Apply TypeScript typing
-- Handle errors with appropriate status codes
-- Work with nested objects
-- Keep data in memory without using a database
-
-## Author
-
-Developed by [Eric Sousa](https://github.com/ericsousa).
+- This project does not use a database.
+- All products are stored in memory and are reset when the server restarts.
+- A Postman collection can be used to test all CRUD routes.
+- The API uses JSON for all request and response bodies.
