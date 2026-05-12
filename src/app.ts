@@ -57,6 +57,28 @@ function generateProductId(): number {
     return maxId + 1; // Return the next ID
 }
 
+function validateProductData(data: any): void {
+    
+    if (!data.nome || !data.preco || !data.fabricante)  
+        throw new Error('Produto requer nome, preco e fabricante');
+
+    if (data.preco <= 0)    
+        throw new Error('Preço do produto deve ser maior que zero');
+
+    if (!data.fabricante.nome)  
+        throw new Error('Nome do fabricante é obrigatório');
+
+    if (!data.fabricante.endereco)  
+        throw new Error('Endereço do fabricante é obrigatório');
+
+    if (!data.fabricante.endereco.cidade)   
+        throw new Error('Cidade do fabricante é obrigatória');
+
+    if (!data.fabricante.endereco.pais)     
+        throw new Error('País do fabricante é obrigatório');
+
+}
+
 function newProduct(req: Request, res: Response): void {
     try {
         let data: any = req.body;
@@ -71,9 +93,7 @@ function newProduct(req: Request, res: Response): void {
             throw new Error('ID já existe. Por favor, forneça um ID único ou deixe em branco para auto-gerar.');
         }
 
-        if (!data.nome || !data.preco || !data.fabricante) {
-            throw new Error('Produto requer nome, preco e fabricante');
-        }
+        validateProductData(data);
 
         const produto = new Produto(
             data.id || generateProductId(),
@@ -98,9 +118,8 @@ function updateProduct(req: Request, res: Response): void {
         if (produtoIndex === -1) {
             throw new Error('Produto não encontrado');
         }
-        if (!data.nome || !data.preco || !data.fabricante) {
-            throw new Error('Produto requer nome, preco e fabricante');
-        }
+
+        validateProductData(data);
 
         const produto = new Produto(
             id,
@@ -112,7 +131,12 @@ function updateProduct(req: Request, res: Response): void {
         produtos[produtoIndex] = produto;
         res.status(200).json(produto);
     } catch (e: unknown) {
-        res.status(404).json({ error: (e as Error).message });
+        
+        if ((e as Error).message === 'Produto não encontrado') {
+            res.status(404).json({ error: (e as Error).message });
+        } else {   
+            res.status(400).json({ error: (e as Error).message });
+        }
     }
 }
 
